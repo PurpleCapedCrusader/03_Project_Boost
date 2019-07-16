@@ -854,6 +854,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767159729}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1019040170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3838091824833160385, guid: 1d1c59f16c5984fe59aaeab0f2c86c93,
+    type: 3}
+  m_PrefabInstance: {fileID: 2105157205}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1019040171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019040170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95db3cb9eed50411882e64258e537098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &1019040172
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019040170}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1201620420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,7 +1183,7 @@ PrefabInstance:
     - target: {fileID: 3838091824833160386, guid: 1d1c59f16c5984fe59aaeab0f2c86c93,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.28188
+      value: 7.04
       objectReference: {fileID: 0}
     - target: {fileID: 3838091824833160386, guid: 1d1c59f16c5984fe59aaeab0f2c86c93,
         type: 3}
@@ -1276,7 +1310,7 @@ PrefabInstance:
     - target: {fileID: 693382519674449414, guid: f2975f0048d92450e8c1522c746e292c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 693382519674449414, guid: f2975f0048d92450e8c1522c746e292c,
         type: 3}
