@@ -166,6 +166,7 @@ public class Rocket : MonoBehaviour
             LeftThrustFlame02.GetComponent<Renderer>().enabled = true;
             LeftThrustFlame03.GetComponent<Renderer>().enabled = true;
             LeftThrustFlame04.GetComponent<Renderer>().enabled = true;
+
             if (leftThrustFlicker4 == 1)
             {
                 LeftThrustFlame04.GetComponent<Renderer>().enabled = false;
