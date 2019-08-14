@@ -6,12 +6,10 @@ public class FlameLightComponent : MonoBehaviour
 {
     private Light myLight;
     
-    
     void Start ()
     {
         myLight = GetComponent<Light>();
     }
-    
     
     void Update ()
     {
