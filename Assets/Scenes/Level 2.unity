@@ -580,6 +580,31 @@ PrefabInstance:
       propertyPath: m_BounceIntensity
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 693382519674449415, guid: f2975f0048d92450e8c1522c746e292c,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693382519674449415, guid: f2975f0048d92450e8c1522c746e292c,
+        type: 3}
+      propertyPath: m_DrawHalo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 693382519674449415, guid: f2975f0048d92450e8c1522c746e292c,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 693382519674449415, guid: f2975f0048d92450e8c1522c746e292c,
+        type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 693382519674449415, guid: f2975f0048d92450e8c1522c746e292c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 693382519674449414, guid: f2975f0048d92450e8c1522c746e292c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -855,11 +880,6 @@ PrefabInstance:
     - target: {fileID: 4871990660187912425, guid: 99baefd6ef05f4d69975fad93bda9e12,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1716021443129929656, guid: 99baefd6ef05f4d69975fad93bda9e12,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
