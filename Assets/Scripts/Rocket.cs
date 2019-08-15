@@ -14,7 +14,8 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem leftThrusterParticles;
     [SerializeField] ParticleSystem rightThrusterParticles;
     [SerializeField] ParticleSystem successParticles;
-    [SerializeField] ParticleSystem deathParticles;
+    // [SerializeField] ParticleSystem deathParticles;
+    public GameObject Explosion;
     AudioSource audioSource;
     enum State { Alive, Dyine, Trancending }
     State state = State.Alive;
@@ -26,7 +27,6 @@ public class Rocket : MonoBehaviour
     public GameObject RightThrustFlame02;
     public GameObject RightThrustFlame03;
     public GameObject RightThrustFlame04;
-
 
     // Start is called before the first frame update
     void Start()
@@ -97,9 +97,9 @@ public class Rocket : MonoBehaviour
     
     private void expolde()
     {
-        audioSource.PlayOneShot(death);
-        deathParticles.Play();
-        Destroy(this.gameObject, 0.25f);
+        audioSource.PlayOneShot(death, .3f);
+        GameObject explosion = Instantiate(Explosion, transform.position, Quaternion.identity);
+        // deathParticles.Play();
     }
 
     private void LoadNextLevel()
