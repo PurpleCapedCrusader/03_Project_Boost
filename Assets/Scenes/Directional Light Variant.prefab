@@ -12,36 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Directional Light Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
-        type: 3}
-      propertyPath: m_DrawHalo
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
-        type: 3}
-      propertyPath: m_ShadowAngle
-      value: 27.4
-      objectReference: {fileID: 0}
     - target: {fileID: 4559926291499501177, guid: 4c2d4cd19d3dc41c5904738164fe1980,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -96,6 +66,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -15.002001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
+        type: 3}
+      propertyPath: m_DrawHalo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4559926291499501176, guid: 4c2d4cd19d3dc41c5904738164fe1980,
+        type: 3}
+      propertyPath: m_ShadowAngle
+      value: 27.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c2d4cd19d3dc41c5904738164fe1980, type: 3}
