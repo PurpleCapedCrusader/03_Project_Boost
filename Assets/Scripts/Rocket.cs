@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour
 {
 
-    [SerializeField] float mainThrust = 103f;
+    [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotateThrust = 100f;
     Rigidbody rigidBody;
     [SerializeField] AudioClip mainEngine;
