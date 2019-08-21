@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
@@ -6,6 +7,7 @@ public class Rocket : MonoBehaviour
 
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotateThrust = 100f;
+    [SerializeField] float levelLoadDelay = 3f;
     Rigidbody rigidBody;
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip success;
@@ -14,10 +16,10 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem leftThrusterParticles;
     [SerializeField] ParticleSystem rightThrusterParticles;
     [SerializeField] ParticleSystem successParticles;
-    // [SerializeField] ParticleSystem deathParticles;
-    public GameObject Explosion;
+    [SerializeField] ParticleSystem deathParticles;
+    // public GameObject Explosion;
     AudioSource audioSource;
-    enum State { Alive, Dyine, Trancending }
+    enum State { Alive, Dying, Trancending }
     State state = State.Alive;
     public GameObject LeftThrustFlame01;
     public GameObject LeftThrustFlame02;
@@ -27,6 +29,11 @@ public class Rocket : MonoBehaviour
     public GameObject RightThrustFlame02;
     public GameObject RightThrustFlame03;
     public GameObject RightThrustFlame04;
+    public GameObject ExplosionChildForDetachment;
+    public GameObject CuteRocket;
+    public Renderer rend;
+    bool collisionDisabled = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +48,12 @@ public class Rocket : MonoBehaviour
         RightThrustFlame02 = GameObject.Find("/CuteRocket/RightThruster/RightThrustFlame/Flame02");
         RightThrustFlame03 = GameObject.Find("/CuteRocket/RightThruster/RightThrustFlame/Flame03");
         RightThrustFlame04 = GameObject.Find("/CuteRocket/RightThruster/RightThrustFlame/Flame04");
+        ExplosionChildForDetachment = GameObject.Find("/CuteRocket/ExplosionChildForDetachment");
+        CuteRocket = GameObject.Find("/CuteRocket");
+        CuteRocket.GetComponent<Renderer>().enabled = true;
+
+        rend = GetComponent<Renderer>();
+        rend.enabled = false;
     }
 
     // Update is called once per frame
@@ -51,6 +64,24 @@ public class Rocket : MonoBehaviour
             RespondToThrustInput();
             RespondToRotateInput();
         }
+        //debug tools
+        if (Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();
+        }
+    }
+
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextLevel();
+        };
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionDisabled = !collisionDisabled; // toggle
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -59,7 +90,7 @@ public class Rocket : MonoBehaviour
         {
             return;
         }
-        
+
         switch (collision.gameObject.tag)
         {
             case "Friendly":
@@ -80,26 +111,35 @@ public class Rocket : MonoBehaviour
         state = State.Trancending;
         thrustFlamesOff();
         audioSource.Stop();
-        audioSource.PlayOneShot(success);
+        audioSource.PlayOneShot(success, .3f);
         successParticles.Play();
-        Invoke("LoadNextLevel", 2f);
+        Invoke("LoadNextLevel", levelLoadDelay);
     }
 
-     private void StartDeathSequence()
+    private void StartDeathSequence()
     {
-        state = State.Dyine;
-        audioSource.Stop();
-        audioSource.PlayOneShot(dead_voice);
-        Invoke("expolde", 1f);
-        thrustFlamesOff();
-        Invoke("LoadFirstLevel", 3f);
+        if (collisionDisabled)
+        {
+            state = State.Dying;
+            audioSource.Stop();
+            audioSource.PlayOneShot(dead_voice);
+            Invoke("expolde", 1f);
+            thrustFlamesOff();
+            Invoke("LoadFirstLevel", levelLoadDelay);
+        }
+        else
+        {
+            return;
+        }
     }
-    
+
     private void expolde()
     {
         audioSource.PlayOneShot(death, .3f);
-        GameObject explosion = Instantiate(Explosion, transform.position, Quaternion.identity);
-        // deathParticles.Play();
+        deathParticles.Play();
+        // CuteRocket.GetComponent<Renderer>().enabled = false;
+        Destroy(obj: CuteRocket, .17f);
+        ExplosionChildForDetachment.transform.parent = null;
     }
 
     private void LoadNextLevel()
@@ -132,7 +172,7 @@ public class Rocket : MonoBehaviour
     private void ApplyThrust()
     {
         flame();
-        rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
         if (!audioSource.isPlaying)
         {
             audioSource.PlayOneShot(mainEngine);
@@ -143,8 +183,6 @@ public class Rocket : MonoBehaviour
 
     private void RespondToRotateInput()
     {
-        rigidBody.freezeRotation = true; // take manual control of rotation
-
         float rotationSpeed = rotateThrust * Time.deltaTime;
 
         if (Input.GetKeyUp(KeyCode.Space))
@@ -153,6 +191,7 @@ public class Rocket : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
+            rigidBody.freezeRotation = true; // take manual control of rotation
             transform.Rotate(Vector3.forward * rotationSpeed);
             GetComponent<Renderer>().enabled = false;
         }
