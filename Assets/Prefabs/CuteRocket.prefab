@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 5253063261468318695}
   - component: {fileID: 8520151186531093282}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cube3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,6 +359,9 @@ MonoBehaviour:
   rightThrusterParticles: {fileID: 4786515932129198771}
   successParticles: {fileID: 1134340917312416980}
   deathParticles: {fileID: 7200297081432957641}
+  RocketBody: {fileID: 0}
+  LeftThruster: {fileID: 0}
+  RightThruster: {fileID: 0}
   LeftThrustFlame01: {fileID: 0}
   LeftThrustFlame02: {fileID: 0}
   LeftThrustFlame03: {fileID: 0}
@@ -598,7 +601,7 @@ GameObject:
   - component: {fileID: 9121793253821760333}
   - component: {fileID: 1702723425041711418}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1443,7 +1446,7 @@ GameObject:
   - component: {fileID: 87262776998354666}
   - component: {fileID: 6631055238695533420}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

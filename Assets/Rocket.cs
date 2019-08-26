@@ -21,6 +21,12 @@ public class Rocket : MonoBehaviour
     AudioSource audioSource;
     enum State { Alive, Dying, Trancending }
     State state = State.Alive;
+    public GameObject RocketBody;
+    public GameObject NoseCube1;
+    public GameObject NoseCube2;
+    public GameObject NoseCube3;
+    public GameObject LeftThruster;
+    public GameObject RightThruster;
     public GameObject LeftThrustFlame01;
     public GameObject LeftThrustFlame02;
     public GameObject LeftThrustFlame03;
@@ -31,8 +37,13 @@ public class Rocket : MonoBehaviour
     public GameObject RightThrustFlame04;
     public GameObject ExplosionChildForDetachment;
     public GameObject CuteRocket;
+    public GameObject Rock11;
     public Renderer rend;
     bool collisionDisabled = false;
+    public float radius = 12.5F;
+    public float power = 700.0F;
+    public GameObject CollisionRock;
+    public bool debugControls = false;
 
 
     // Start is called before the first frame update
@@ -40,6 +51,12 @@ public class Rocket : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        NoseCube1 = GameObject.Find("/CuteRocket/RocketBody/Cube1");
+        NoseCube2 = GameObject.Find("/CuteRocket/RocketBody/Cube2");
+        NoseCube3 = GameObject.Find("/CuteRocket/RocketBody/Cube3");
+        RocketBody = GameObject.Find("/CuteRocket/RocketBody");
+        LeftThruster = GameObject.Find("/CuteRocket/LeftThruster");
+        RightThruster = GameObject.Find("/CuteRocket/RightThruster");
         LeftThrustFlame01 = GameObject.Find("/CuteRocket/LeftThruster/LeftThrustFlame/Flame01");
         LeftThrustFlame02 = GameObject.Find("/CuteRocket/LeftThruster/LeftThrustFlame/Flame02");
         LeftThrustFlame03 = GameObject.Find("/CuteRocket/LeftThruster/LeftThrustFlame/Flame03");
@@ -51,9 +68,6 @@ public class Rocket : MonoBehaviour
         ExplosionChildForDetachment = GameObject.Find("/CuteRocket/ExplosionChildForDetachment");
         CuteRocket = GameObject.Find("/CuteRocket");
         CuteRocket.GetComponent<Renderer>().enabled = true;
-
-        rend = GetComponent<Renderer>();
-        rend.enabled = false;
     }
 
     // Update is called once per frame
@@ -65,7 +79,8 @@ public class Rocket : MonoBehaviour
             RespondToRotateInput();
         }
         //debug tools
-        if (Debug.isDebugBuild)
+        // print("debugControls = " + debugControls);
+        if (debugControls)
         {
             RespondToDebugKeys();
         }
@@ -76,7 +91,7 @@ public class Rocket : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             LoadNextLevel();
-        };
+        }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -86,6 +101,7 @@ public class Rocket : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        print(collision.gameObject.name);
         if (state != State.Alive)
         {
             return;
@@ -98,6 +114,11 @@ public class Rocket : MonoBehaviour
                 break;
             case "Finish":
                 StartSuccessSequence();
+                break;
+            case "MovingObstacle":
+                CollisionRock = collision.gameObject; // gets name of the other collision object
+                CollisionRock.GetComponent<Oscillator>().enabled = false;
+                StartDeathSequence();
                 break;
             default:
                 StartDeathSequence();
@@ -118,7 +139,7 @@ public class Rocket : MonoBehaviour
 
     private void StartDeathSequence()
     {
-        if (collisionDisabled)
+        if (!collisionDisabled)
         {
             state = State.Dying;
             audioSource.Stop();
@@ -137,14 +158,46 @@ public class Rocket : MonoBehaviour
     {
         audioSource.PlayOneShot(death, .3f);
         deathParticles.Play();
-        // CuteRocket.GetComponent<Renderer>().enabled = false;
-        Destroy(obj: CuteRocket, .17f);
         ExplosionChildForDetachment.transform.parent = null;
+        Invoke("explosionForce", .17f);
+        Invoke("hideRocket", .17f);
+    }
+    private void explosionForce()
+    {
+        Vector3 explosionPos = transform.position;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+            if (rb != null)
+                rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
+        }
+    }
+
+    private void hideRocket()
+    {
+        NoseCube1.GetComponent<Renderer>().enabled = false;
+        NoseCube2.GetComponent<Renderer>().enabled = false;
+        NoseCube3.GetComponent<Renderer>().enabled = false;
+        RocketBody.GetComponent<Renderer>().enabled = false;
+        LeftThruster.GetComponent<Renderer>().enabled = false;
+        RightThruster.GetComponent<Renderer>().enabled = false;
     }
 
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(1);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if ((SceneManager.sceneCountInBuildSettings - 1) == currentSceneIndex)
+        {
+            LoadFirstLevel();
+        }
+        else
+        {
+            int nextSceneIndex = currentSceneIndex + 1;
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+        
     }
 
     private void LoadFirstLevel()
@@ -206,7 +259,7 @@ public class Rocket : MonoBehaviour
 
     private void flame()
     {
-        if (Input.GetKey(KeyCode.Space)) // can thrust while rotating
+        if ((Input.GetKey(KeyCode.Space) && (state == State.Alive))) // can thrust while rotating
         {
             System.Random random = new System.Random();
             var leftThrustFlicker4 = random.Next(1, 4);
